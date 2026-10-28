@@ -18,7 +18,7 @@
     <button class="menu-toggle" aria-label="Відкрити меню" aria-expanded="false" aria-controls="main-nav"><span></span><span></span></button>
     <nav id="main-nav" class="main-nav" aria-label="Головна навігація">
       <a href="#services">Послуги</a><a href="#approach">Наш підхід</a><a href="#care">Турбота про себе</a>
-      <a class="nav-cta" href="#services">Обрати послугу <span aria-hidden="true">↗</span></a>
+      <a class="nav-cta" href="#booking">Записатися <span aria-hidden="true">↗</span></a>
     </nav>
   </header>
 
@@ -28,7 +28,7 @@
         <p class="eyebrow"><span class="eyebrow-dot"></span> Усмішка починається з турботи</p>
         <h1>Здорові зуби.<br><span>Впевнена усмішка.</span></h1>
         <p class="hero-lead">Стоматологія, де до вашої усмішки ставляться уважно — від першої консультації до щоденної профілактики.</p>
-        <div class="hero-actions"><a class="button button-dark" href="#services">Дізнатися про послуги <span aria-hidden="true">↗</span></a><a class="text-link" href="#approach">Як ми працюємо <span aria-hidden="true">↓</span></a></div>
+        <div class="hero-actions"><a class="button button-dark" href="#booking">Записатися на консультацію <span aria-hidden="true">↗</span></a><a class="text-link" href="#approach">Як ми працюємо <span aria-hidden="true">↓</span></a></div>
         <div class="hero-note"><span class="note-icon" aria-hidden="true">✳</span><span>Зрозуміло пояснюємо кожен крок<br>і дбаємо про ваш комфорт.</span></div>
       </div>
       <div class="hero-art" aria-label="Ілюстрація усмішки та зуба" role="img">
@@ -54,6 +54,27 @@
         <article class="service-card card-pearl"><div class="service-top"><span class="service-number">02 / Лікування</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="service-icon icon-cross" aria-hidden="true">＋</div><h3>Лікування зубів</h3><p>Уважний огляд, зрозуміле пояснення варіантів і план лікування, узгоджений разом із вами.</p><a href="#approach" class="card-link">Дізнатися більше <span>→</span></a></article>
         <article class="service-card card-lilac"><div class="service-top"><span class="service-number">03 / Естетика</span><span class="card-arrow" aria-hidden="true">↗</span></div><div class="service-icon icon-smile" aria-hidden="true">⌣</div><h3>Естетична стоматологія</h3><p>Делікатний догляд за усмішкою з урахуванням ваших побажань та індивідуальних особливостей.</p><a href="#approach" class="card-link">Дізнатися більше <span>→</span></a></article>
       </div>
+    </section>
+
+    <section id="booking" class="booking section-wrap">
+      <div class="booking-heading"><div><p class="eyebrow">Онлайн-запис</p><h2>Заплануймо<br>ваш візит</h2></div><p>Оберіть напрям і бажаний час. Клініка зв’яжеться з вами, щоб підтвердити запис.</p></div>
+      <form class="booking-form" id="booking-form">
+        <fieldset class="service-choice"><legend><span class="step-number">01</span> Який візит плануєте?</legend>
+          <div class="choice-grid">
+            <label class="choice-card"><input type="radio" name="service" value="Консультація" checked><span class="choice-check" aria-hidden="true"></span><span class="choice-icon" aria-hidden="true">✳</span><strong>Консультація</strong><small>Огляд і план лікування</small></label>
+            <label class="choice-card"><input type="radio" name="service" value="Лікування зубів"><span class="choice-check" aria-hidden="true"></span><span class="choice-icon" aria-hidden="true">＋</span><strong>Лікування зубів</strong><small>Допомога з конкретним запитом</small></label>
+            <label class="choice-card"><input type="radio" name="service" value="Профілактика та гігієна"><span class="choice-check" aria-hidden="true"></span><span class="choice-icon" aria-hidden="true">◌</span><strong>Профілактика</strong><small>Огляд і професійна гігієна</small></label>
+            <label class="choice-card"><input type="radio" name="service" value="Естетична стоматологія"><span class="choice-check" aria-hidden="true"></span><span class="choice-icon" aria-hidden="true">⌣</span><strong>Естетична стоматологія</strong><small>Обговорення бажаного результату</small></label>
+          </div>
+        </fieldset>
+        <fieldset class="visit-details"><legend><span class="step-number">02</span> Коли вам зручно?</legend>
+          <div class="details-grid"><label class="field-label">Бажана дата<input type="date" id="visit-date" name="date" required><small>Ми підтвердимо доступність окремо.</small></label><label class="field-label">Зручний час<select name="period" required><option value="Ранок">Ранок</option><option value="День">День</option><option value="Вечір">Вечір</option><option value="Будь-який час">Будь-який час</option></select><small>Вкажіть частину дня, яка вам підходить.</small></label></div>
+        </fieldset>
+        <fieldset class="contact-details"><legend><span class="step-number">03</span> Як із вами зв’язатися?</legend>
+          <div class="details-grid contact-grid"><label class="field-label">Ваше ім’я<input type="text" name="name" autocomplete="name" placeholder="Наприклад, Олена" required maxlength="80"></label><label class="field-label">Як відповісти?<select id="contact-method" name="contactMethod"><option value="phone">Телефоном</option><option value="email">Електронною поштою</option></select></label><label class="field-label" id="contact-value-label">Номер телефону<input type="tel" id="contact-value" name="contactValue" autocomplete="tel" placeholder="+380 __ ___ __ __" required maxlength="24"></label></div>
+        </fieldset>
+        <div class="booking-submit"><button type="submit" class="button button-dark">Підготувати email-запит <span aria-hidden="true">↗</span></button><p id="booking-status" class="booking-status" role="status" aria-live="polite">Клініка підтвердить бажаний час після зв’язку з вами.</p><small>Відкриється лист у вашій поштовій програмі; перевірте й надішліть його там.</small><small>Не вказуйте в заявці медичні подробиці. Ми уточнимо необхідну інформацію під час розмови.</small></div>
+      </form>
     </section>
 
     <section id="approach" class="approach">
