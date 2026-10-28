@@ -173,24 +173,26 @@ function escapeHtml(value) {
   })[character]);
 }
 
-async function serveStatic(urlPath, response) {
+async function serveStatic(urlPath, method, response) {
   const requestedFile = urlPath === '/' ? 'index.html' : urlPath.slice(1);
   if (!['index.html', 'styles.css', 'script.js'].includes(requestedFile)) {
     respondJson(response, 404, { error: 'Сторінку не знайдено.' });
     return;
   }
+  let content;
   try {
-    const content = await readFile(path.join(siteDir, requestedFile));
-    response.writeHead(200, {
-      'Content-Type': mimeTypes[path.extname(requestedFile)],
-      'X-Content-Type-Options': 'nosniff',
-      'Referrer-Policy': 'strict-origin-when-cross-origin',
-      'Cache-Control': requestedFile === 'index.html' ? 'no-cache' : 'public, max-age=3600'
-    });
-    response.end(request.method === 'HEAD' ? undefined : content);
+    content = await readFile(path.join(siteDir, requestedFile));
   } catch {
     respondJson(response, 500, { error: 'Не вдалося завантажити сайт.' });
+    return;
   }
+  response.writeHead(200, {
+    'Content-Type': mimeTypes[path.extname(requestedFile)],
+    'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Cache-Control': requestedFile === 'index.html' ? 'no-cache' : 'public, max-age=3600'
+  });
+  response.end(method === 'HEAD' ? undefined : content);
 }
 
 const server = createServer(async (request, response) => {
@@ -204,13 +206,13 @@ const server = createServer(async (request, response) => {
     return;
   }
   if (request.method === 'GET' || request.method === 'HEAD') {
-    await serveStatic(url.pathname, response);
+    await serveStatic(url.pathname, request.method, response);
     return;
   }
   respondJson(response, 405, { error: 'Метод запиту не підтримується.' });
 });
 
 const port = Number(process.env.PORT || 3000);
-server.listen(port, '0.0.0.0', () => {
+server.listen(port, '127.0.0.1', () => {
   console.log(`${clinicName} Node.js server listening on port ${port}`);
 });
