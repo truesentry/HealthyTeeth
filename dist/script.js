@@ -25,14 +25,9 @@ if (visitDate) {
 const bookingForm = document.querySelector('#booking-form');
 const clinicEmail = 'HealthlyTeeth@gmail.com';
 if (bookingForm) {
-  bookingForm.addEventListener('submit', (event) => {
+  bookingForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const status = document.querySelector('#booking-status');
-    if (!clinicEmail) {
-      status.textContent = 'Не вдалося відкрити email-запит. Спробуйте ще раз або напишіть до клініки напряму.';
-      status.classList.add('is-error');
-      return;
-    }
     const data = new FormData(bookingForm);
     const method = data.get('contactMethod') === 'email' ? 'Електронна пошта' : 'Телефон';
     const subject = `Запит на запис — ${data.get('service')}`;
@@ -49,8 +44,33 @@ if (bookingForm) {
       '',
       'Будь ласка, зв’яжіться з клієнтом, щоб підтвердити час.'
     ].join('\n');
-    status.textContent = 'Відкриваємо лист із заявкою. Перевірте його та натисніть «Надіслати» у поштовій програмі.';
+    const submitButton = bookingForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    status.textContent = 'Надсилаємо заявку…';
     status.classList.remove('is-error');
-    window.location.href = `mailto:${clinicEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    try {
+      const response = await fetch('/api/bookings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.fromEntries(data.entries()))
+      });
+      if (response.status === 404) {
+        // Static preview fallback. On the Node.js server, requests use the API above.
+        status.textContent = 'Відкриваємо email-запит. Перевірте його та надішліть у поштовій програмі.';
+        window.location.href = `mailto:${clinicEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.error || 'Не вдалося надіслати заявку. Спробуйте пізніше.');
+      status.textContent = 'Заявку отримано. На вашу пошту надіслано лист-підтвердження отримання. Клініка окремо зв’яжеться з вами, щоб підтвердити час.';
+      bookingForm.reset();
+      if (visitDate) visitDate.min = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    } catch (error) {
+      status.textContent = error.message || 'Не вдалося надіслати заявку. Перевірте з’єднання та спробуйте ще раз.';
+      status.classList.add('is-error');
+    } finally {
+      submitButton.disabled = false;
+    }
   });
 }
