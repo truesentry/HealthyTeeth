@@ -57,7 +57,7 @@
     </section>
 
     <section id="booking" class="booking section-wrap">
-      <div class="booking-heading"><div><p class="eyebrow">Онлайн-запис</p><h2>Заплануймо<br>ваш візит</h2></div><p>Оберіть напрям і бажаний час. Клініка зв’яжеться з вами, щоб підтвердити запис.</p></div>
+      <div class="booking-heading"><div><p class="eyebrow">Онлайн-запис</p><h2>Заплануймо<br>ваш візит</h2></div><p>Оберіть послугу та бажані дату й час. Клініка перевірить їх і зв’яжеться з вами для підтвердження.</p></div>
       <form class="booking-form" id="booking-form">
         <fieldset class="service-choice"><legend><span class="step-number">01</span> Який візит плануєте?</legend>
           <div class="choice-grid">
@@ -68,10 +68,10 @@
           </div>
         </fieldset>
         <fieldset class="visit-details"><legend><span class="step-number">02</span> Коли вам зручно?</legend>
-          <div class="details-grid"><label class="field-label">Бажана дата<input type="date" id="visit-date" name="date" required><small>Ми підтвердимо доступність окремо.</small></label><label class="field-label">Зручний час<select name="period" required><option value="Ранок">Ранок</option><option value="День">День</option><option value="Вечір">Вечір</option><option value="Будь-який час">Будь-який час</option></select><small>Вкажіть частину дня, яка вам підходить.</small></label></div>
+          <div class="details-grid"><label class="field-label">Бажана дата<input type="date" id="visit-date" name="date" required><small>Клініка перевірить доступність.</small></label><label class="field-label">Бажаний час<input type="time" name="time" step="900" required><small>Вкажіть час із кроком 15 хвилин.</small></label></div>
         </fieldset>
         <fieldset class="contact-details"><legend><span class="step-number">03</span> Як із вами зв’язатися?</legend>
-          <div class="details-grid contact-grid"><label class="field-label">Ваше ім’я<input type="text" name="name" autocomplete="name" placeholder="Наприклад, Олена" required maxlength="80"></label><label class="field-label">Як відповісти?<select id="contact-method" name="contactMethod"><option value="phone">Телефоном</option><option value="email">Електронною поштою</option></select></label><label class="field-label" id="contact-value-label">Номер телефону<input type="tel" id="contact-value" name="contactValue" autocomplete="tel" placeholder="+380 __ ___ __ __" required maxlength="24"></label></div>
+          <div class="details-grid contact-grid"><label class="field-label">ПІБ<input type="text" name="name" autocomplete="name" placeholder="Прізвище, ім’я, по батькові" required maxlength="120"></label><label class="field-label">Номер телефону<input type="tel" name="phone" autocomplete="tel" placeholder="+380 __ ___ __ __" required maxlength="24"></label><label class="field-label">Email<input type="email" name="email" autocomplete="email" placeholder="name@example.com" required maxlength="160"></label><label class="field-label">Як клініці зручніше відповісти?<select name="contactMethod"><option value="phone">Телефоном</option><option value="email">Електронною поштою</option></select></label></div>
         </fieldset>
         <div class="booking-submit"><button type="submit" class="button button-dark">Підготувати email-запит <span aria-hidden="true">↗</span></button><p id="booking-status" class="booking-status" role="status" aria-live="polite">Клініка підтвердить бажаний час після зв’язку з вами.</p><small>Відкриється лист у вашій поштовій програмі; перевірте й надішліть його там.</small><small>Не вказуйте в заявці медичні подробиці. Ми уточнимо необхідну інформацію під час розмови.</small></div>
       </form>

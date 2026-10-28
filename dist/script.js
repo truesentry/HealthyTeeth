@@ -34,16 +34,18 @@ if (bookingForm) {
       return;
     }
     const data = new FormData(bookingForm);
-    const method = data.get('contactMethod') === 'email' ? 'Email' : 'Телефон';
+    const method = data.get('contactMethod') === 'email' ? 'Електронна пошта' : 'Телефон';
     const subject = `Запит на запис — ${data.get('service')}`;
     const body = [
       'Новий запит на запис до HealtlyTeeth',
       '',
       `Послуга: ${data.get('service')}`,
       `Бажана дата: ${data.get('date')}`,
-      `Зручний час: ${data.get('period')}`,
-      `Ім’я: ${data.get('name')}`,
-      `${method}: ${data.get('contactValue')}`,
+      `Бажаний час: ${data.get('time')}`,
+      `ПІБ: ${data.get('name')}`,
+      `Телефон: ${data.get('phone')}`,
+      `Email: ${data.get('email')}`,
+      `Бажаний спосіб зв’язку: ${method}`, 
       '',
       'Будь ласка, зв’яжіться з клієнтом, щоб підтвердити час.'
     ].join('\n');
@@ -51,19 +53,4 @@ if (bookingForm) {
     status.classList.remove('is-error');
     window.location.href = `mailto:${clinicEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
-}
-const contactMethod = document.querySelector('#contact-method');
-const contactValue = document.querySelector('#contact-value');
-const contactValueLabel = document.querySelector('#contact-value-label');
-if (contactMethod && contactValue && contactValueLabel) {
-  const updateContactField = () => {
-    const isEmail = contactMethod.value === 'email';
-    contactValue.type = isEmail ? 'email' : 'tel';
-    contactValue.autocomplete = isEmail ? 'email' : 'tel';
-    contactValue.inputMode = isEmail ? 'email' : 'tel';
-    contactValue.maxLength = isEmail ? 160 : 24;
-    contactValue.placeholder = isEmail ? 'name@example.com' : '+380 __ ___ __ __';
-    contactValueLabel.firstChild.textContent = isEmail ? 'Електронна пошта' : 'Номер телефону';
-  };
-  contactMethod.addEventListener('change', updateContactField);
 }
